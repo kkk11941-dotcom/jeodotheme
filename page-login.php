@@ -22,11 +22,28 @@ get_header();
         <div class="logo-box"><?php bloginfo( 'name' ); ?></div>
     </div>
 
-    <?php if ( isset( $_GET['login'] ) && $_GET['login'] == 'failed' ) : ?>
-        <div style="color: red; background: #ffe6e6; padding: 10px; margin-bottom: 20px; border-radius: 4px; text-align: center;">
-            로그인 정보가 올바르지 않습니다. 다시 확인해주세요.
-            </div>
-    <?php endif; ?>
+<?php
+// Handle login errors
+$login_errors = array(
+    'invalid_username' => '잘못된 사용자명입니다. 다시 확인해주세요.',
+    'incorrect_password' => '비밀번호가 올바르지 않습니다.',
+    'empty_username' => '아이디 또는 이메일을 입력해주세요.',
+    'empty_password' => '비밀번호를 입력해주세요.',
+    'invalid_email' => '입력하신 이메일 주소를 다시 확인해주세요.',
+);
+
+// returned error code from wp-login.php
+$err_code = isset($_GET['login']) ? sanitize_text_field($_GET['login']) : '';
+
+if ( $err_code && isset($login_errors[$err_code]) ) :
+?>
+    <div style="color: red; background: #ffe6e6; padding: 10px; margin-bottom: 20px; border-radius: 4px; text-align: center;">
+        <?php echo esc_html( $login_errors[$err_code] ); ?>
+    </div>
+<?php endif; ?>
+
+
+    
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
         

@@ -176,3 +176,95 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Create default Login page when the theme is activated
+ */
+function jeodo_create_default_pages() {
+  
+	// Page Slug -> [ title, Template File ]
+	$pages = array(
+		'login' => array(
+			'title' 	=> 'Login',
+			'template'	=> 'page-login.php',
+		),
+		'register'	=> array(
+			'title'		=> 'Register',
+			'template'	=> 'page-register.php',
+		),
+		'account' => array(
+			'title'		=> 'My Account',
+			'template'	=> 'page-account.php',
+
+		),
+	),
+
+	foreach (	$pages as $slug => $page_data	) {
+
+		// Check if the page already exists
+        $existing = get_page_by_path( $slug );
+
+        if ( ! $existing ) {
+
+            // Create the page
+            $page_id = wp_insert_post( array(
+                'post_title'     => $page_data['title'],
+                'post_name'      => $slug,
+                'post_content'   => '',
+                'post_status'    => 'publish',
+                'post_type'      => 'page',
+                'comment_status' => 'closed',
+            ) );
+
+            // Assign template if creation successful
+            if ( $page_id && ! is_wp_error( $page_id ) ) {
+                update_post_meta( $page_id, '_wp_page_template', $page_data['template'] );
+            }
+        }
+
+	}
+}
+add_action( 'after_switch_theme', 'jeodo_create_default_pages' );
+
+/**
+ * Redirect failed login to custom login page with error code
+ */
+function jeodo_custom_login_failed( $username ) {
+    $referrer = wp_get_referer();
+    $login_page = home_url('/login');
+
+    // Determine the error type
+    if ( isset( $_REQUEST['log'] ) ) {
+        $user = get_user_by( 'login', $_REQUEST['log'] );
+        if ( ! $user ) {
+            $error_type = 'invalid_username';
+        } else {
+            $error_type = 'incorrect_password';
+        }
+    } else {
+        $error_type = 'invalid_username';
+    }
+
+    wp_redirect( $login_page . '?login=' . $error_type );
+    exit;
+}
+add_action( 'wp_login_failed', 'jeodo_custom_login_failed' );
+
+/**
+ * Redirect empty fields back to custom login page
+ */
+function jeodo_check_empty_fields( $user, $username, $password ) {
+    if ( isset($_POST['log']) && empty($username) ) {
+        wp_redirect( home_url('/login?login=empty_username') );
+        exit;
+    }
+
+    if ( isset($_POST['pwd']) && empty($password) ) {
+        wp_redirect( home_url('/login?login=empty_password') );
+        exit;
+    }
+
+    return $user;
+}
+add_filter( 'authenticate', 'jeodo_check_empty_fields', 1, 3 );
+
+

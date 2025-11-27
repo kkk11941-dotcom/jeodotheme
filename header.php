@@ -44,11 +44,12 @@
                          <a href="<?php echo home_url('/account'); ?>" class="icon-link" aria-label="My Account">
                             <i class="fa-regular fa-user"></i>
                          </a>
-                    <?php else : ?>
-                         <a href="<?php echo home_url('/login'); ?>" class="icon-link" aria-label="Login">
-                            <i class="fa-regular fa-user"></i>
-                         </a>
-                    <?php endif; ?>
+              <?php else : ?>
+                    <a href="<?php echo home_url('/login'); ?>" class="icon-link" aria-label="Login">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
+                <?php endif; ?>
+
 
                     <button class="icon-btn search-toggle"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
