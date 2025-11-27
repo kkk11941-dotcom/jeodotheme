@@ -176,6 +176,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+<<<<<<< HEAD
 /**
  * Create default Login page when the theme is activated
  */
@@ -268,3 +269,15 @@ function jeodo_check_empty_fields( $user, $username, $password ) {
 add_filter( 'authenticate', 'jeodo_check_empty_fields', 1, 3 );
 
 
+=======
+// Add this to functions.php
+function jeodo_news_setup() {
+    // Register the menu location
+    register_nav_menus(
+        array(
+            'menu-1' => esc_html__( 'Primary Menu', 'jeodo-news' ),
+        )
+    );
+}
+add_action( 'after_setup_theme', 'jeodo_news_setup' );
+>>>>>>> 5b72f94d7ebfd46f0b6f4a8a32d53866045ffa8e

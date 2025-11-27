@@ -22,6 +22,7 @@ get_header();
         <div class="logo-box"><?php bloginfo( 'name' ); ?></div>
     </div>
 
+<<<<<<< HEAD
 <?php
 // Handle login errors
 $login_errors = array(
@@ -44,6 +45,13 @@ if ( $err_code && isset($login_errors[$err_code]) ) :
 
 
     
+=======
+    <?php if ( isset( $_GET['login'] ) && $_GET['login'] == 'failed' ) : ?>
+        <div style="color: red; background: #ffe6e6; padding: 10px; margin-bottom: 20px; border-radius: 4px; text-align: center;">
+            로그인 정보가 올바르지 않습니다. 다시 확인해주세요.
+            </div>
+    <?php endif; ?>
+>>>>>>> 5b72f94d7ebfd46f0b6f4a8a32d53866045ffa8e
 
     <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
         

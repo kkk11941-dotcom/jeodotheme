@@ -44,17 +44,26 @@
                          <a href="<?php echo home_url('/account'); ?>" class="icon-link" aria-label="My Account">
                             <i class="fa-regular fa-user"></i>
                          </a>
+<<<<<<< HEAD
               <?php else : ?>
                     <a href="<?php echo home_url('/login'); ?>" class="icon-link" aria-label="Login">
                         <i class="fa-regular fa-user"></i>
                     </a>
                 <?php endif; ?>
 
+=======
+                    <?php else : ?>
+                         <a href="<?php echo home_url('/login'); ?>" class="icon-link" aria-label="Login">
+                            <i class="fa-regular fa-user"></i>
+                         </a>
+                    <?php endif; ?>
+>>>>>>> 5b72f94d7ebfd46f0b6f4a8a32d53866045ffa8e
 
                     <button class="icon-btn search-toggle"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
 
+<<<<<<< HEAD
             <nav id="site-navigation" class="main-navigation">
                 <?php
                 wp_nav_menu(
@@ -67,5 +76,18 @@
                 ?>
             </nav>
 
+=======
+<nav id="site-navigation" class="main-navigation">
+    <?php
+    wp_nav_menu(
+        array(
+            'theme_location' => 'menu-1', // This must match the name in functions.php
+            'menu_id'        => 'primary-menu',
+            'container'      => false, 
+        )
+    );
+    ?>
+</nav>
+>>>>>>> 5b72f94d7ebfd46f0b6f4a8a32d53866045ffa8e
         </div>
 	</header>
